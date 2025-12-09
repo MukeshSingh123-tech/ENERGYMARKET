@@ -1,0 +1,40 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+.env
+.env.local
+.DS_Store
+dist/
+build/
+
+# Vite
+.vite/
+coverage/
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+.env/
+
+# Hardhat / Truffle / Solidity
+cache/
+artifacts/
+build/
+deployments/
+coverage/
+*.db
+
+# Lockfiles (optional – remove if you want reproducible builds)
+package-lock.json
+yarn.lock
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+
+# OS
+Thumbs.db
+.DS_Store

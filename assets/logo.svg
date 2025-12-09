@@ -1,0 +1,14 @@
+<svg width="512" height="512" viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" role="img" aria-labelledby="title">
+  <title>EnergyMarket Logo</title>
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#00C9A7"/>
+      <stop offset="100%" stop-color="#007AFF"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="64" fill="url(#g1)"/>
+  <g transform="translate(96,96) scale(0.64)">
+    <path d="M160 16 L208 96 L288 112 L224 168 L240 248 L160 208 L80 248 L96 168 L32 112 L112 96 Z" fill="white" opacity="0.95"/>
+    <circle cx="240" cy="240" r="40" fill="white" opacity="0.9"/>
+  </g>
+</svg>

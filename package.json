@@ -1,0 +1,14 @@
+{
+  "name": "energy-market-monorepo",
+  "private": true,
+  "workspaces": [
+    "ENERGYMARKET/smartgrid/frontend",
+    "ENERGYMARKET/smartgrid/backend",
+    "ENERGYMARKET/smartgrid/blockchain"
+  ],
+  "scripts": {
+    "bootstrap": "echo 'Run package manager install at repo root (pnpm install / npm install)'.",
+    "lint": "echo 'Run workspace linters (use package-specific scripts)'",
+    "test": "echo 'Run workspace tests (use package-specific scripts)'"
+  }
+}

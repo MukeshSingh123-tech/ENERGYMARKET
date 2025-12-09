@@ -1,0 +1,322 @@
+[
+  {
+    "inputs": [{ "internalType": "address", "name": "initialOwner", "type": "address" }],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "owner", "type": "address" }],
+    "name": "OwnableInvalidOwner",
+    "type": "error"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "account", "type": "address" }],
+    "name": "OwnableUnauthorizedAccount",
+    "type": "error"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "prosumer", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "newBalance", "type": "uint256" }
+    ],
+    "name": "EnergyReported",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "nanogridId", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "solarOutput", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "loadDemand", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "IntervalRecorded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "owner", "type": "address" },
+      { "indexed": true, "internalType": "uint256", "name": "nanogridId", "type": "uint256" }
+    ],
+    "name": "NanogridRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "uint256", "name": "nanogridId", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "generation", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "consumption", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "batterySoC", "type": "uint256" }
+    ],
+    "name": "NanogridUpdated",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "previousOwner", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "newOwner", "type": "address" }
+    ],
+    "name": "OwnershipTransferred",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "prosumer", "type": "address" }
+    ],
+    "name": "ProsumerRegistered",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "nanogrid", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "gridRevenue", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "evRevenue", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "RevenueRecorded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      { "indexed": true, "internalType": "address", "name": "seller", "type": "address" },
+      { "indexed": true, "internalType": "address", "name": "buyer", "type": "address" },
+      { "indexed": false, "internalType": "uint256", "name": "amountInKwh", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "pricePerKwh", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "totalRevenue", "type": "uint256" },
+      { "indexed": false, "internalType": "uint256", "name": "timestamp", "type": "uint256" }
+    ],
+    "name": "TradeCompleted",
+    "type": "event"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_buyer", "type": "address" }, { "internalType": "uint256", "name": "_amountInKwh", "type": "uint256" }],
+    "name": "executeP2PTrade",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_nanogridId", "type": "uint256" }],
+    "name": "getIntervalRecords",
+    "outputs": [{ "components": [{ "internalType": "uint256", "name": "nanogridId", "type": "uint256" }, { "internalType": "uint256", "name": "solarOutput", "type": "uint256" }, { "internalType": "uint256", "name": "loadDemand", "type": "uint256" }, { "internalType": "uint256", "name": "batterySoC", "type": "uint256" }, { "internalType": "int256", "name": "powerBalance", "type": "int256" }, { "internalType": "uint256", "name": "gridExport", "type": "uint256" }, { "internalType": "uint256", "name": "evSales", "type": "uint256" }, { "internalType": "uint256", "name": "timestamp", "type": "uint256" }], "internalType": "struct EnergyMarket.IntervalRecord[]", "name": "", "type": "tuple[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllIntervalRecords",
+    "outputs": [{ "components": [{ "internalType": "uint256", "name": "nanogridId", "type": "uint256" }, { "internalType": "uint256", "name": "solarOutput", "type": "uint256" }, { "internalType": "uint256", "name": "loadDemand", "type": "uint256" }, { "internalType": "uint256", "name": "batterySoC", "type": "uint256" }, { "internalType": "int256", "name": "powerBalance", "type": "int256" }, { "internalType": "uint256", "name": "gridExport", "type": "uint256" }, { "internalType": "uint256", "name": "evSales", "type": "uint256" }, { "internalType": "uint256", "name": "timestamp", "type": "uint256" }], "internalType": "struct EnergyMarket.IntervalRecord[]", "name": "", "type": "tuple[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getAllNanogrids",
+    "outputs": [{ "components": [{ "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "uint256", "name": "nanogridId", "type": "uint256" }, { "internalType": "uint256", "name": "totalGeneration", "type": "uint256" }, { "internalType": "uint256", "name": "totalConsumption", "type": "uint256" }, { "internalType": "uint256", "name": "batteryCapacity", "type": "uint256" }, { "internalType": "uint256", "name": "batterySoC", "type": "uint256" }, { "internalType": "uint256", "name": "gridExportRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "evSalesRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "lastUpdated", "type": "uint256" }, { "internalType": "bool", "name": "isActive", "type": "bool" }], "internalType": "struct EnergyMarket.Nanogrid[]", "name": "", "type": "tuple[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_nanogridId", "type": "uint256" }],
+    "name": "getNanogrid",
+    "outputs": [{ "components": [{ "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "uint256", "name": "nanogridId", "type": "uint256" }, { "internalType": "uint256", "name": "totalGeneration", "type": "uint256" }, { "internalType": "uint256", "name": "totalConsumption", "type": "uint256" }, { "internalType": "uint256", "name": "batteryCapacity", "type": "uint256" }, { "internalType": "uint256", "name": "batterySoC", "type": "uint256" }, { "internalType": "uint256", "name": "gridExportRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "evSalesRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "lastUpdated", "type": "uint256" }, { "internalType": "bool", "name": "isActive", "type": "bool" }], "internalType": "struct EnergyMarket.Nanogrid", "name": "", "type": "tuple" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getNanogridCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_address", "type": "address" }],
+    "name": "getTotalRevenue",
+    "outputs": [{ "internalType": "uint256", "name": "gridRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "evRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "p2pRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "totalRevenue", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "getTransactions",
+    "outputs": [{ "components": [{ "internalType": "address", "name": "sender", "type": "address" }, { "internalType": "address", "name": "receiver", "type": "address" }, { "internalType": "uint256", "name": "amountInKwh", "type": "uint256" }, { "internalType": "uint256", "name": "pricePerKwh", "type": "uint256" }, { "internalType": "uint256", "name": "totalRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "timestamp", "type": "uint256" }], "internalType": "struct EnergyMarket.Transaction[]", "name": "", "type": "tuple[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "isProsumer",
+    "outputs": [{ "internalType": "bool", "name": "", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "owner",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "prosumerEnergyBalance",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_nanogridId", "type": "uint256" }, { "internalType": "uint256", "name": "_solarOutput", "type": "uint256" }, { "internalType": "uint256", "name": "_loadDemand", "type": "uint256" }, { "internalType": "uint256", "name": "_batterySoC", "type": "uint256" }, { "internalType": "int256", "name": "_powerBalance", "type": "int256" }, { "internalType": "uint256", "name": "_gridExport", "type": "uint256" }, { "internalType": "uint256", "name": "_evSales", "type": "uint256" }],
+    "name": "recordIntervalData",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_nanogridId", "type": "uint256" }, { "internalType": "uint256", "name": "_gridExportKwh", "type": "uint256" }, { "internalType": "uint256", "name": "_evSalesKwh", "type": "uint256" }, { "internalType": "bool", "name": "_isPeakHour", "type": "bool" }],
+    "name": "recordRevenue",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "_nanogridAddress", "type": "address" }, { "internalType": "uint256", "name": "_batteryCapacity", "type": "uint256" }],
+    "name": "registerNanogrid",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "registerProsumer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "renounceOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_surplusInKwh", "type": "uint256" }],
+    "name": "reportEnergySurplus",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "newOwner", "type": "address" }],
+    "name": "transferOwnership",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_nanogridId", "type": "uint256" }, { "internalType": "uint256", "name": "_generation", "type": "uint256" }, { "internalType": "uint256", "name": "_consumption", "type": "uint256" }, { "internalType": "uint256", "name": "_batterySoC", "type": "uint256" }],
+    "name": "updateNanogridMetrics",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "_gridPricePerKwh", "type": "uint256" }, { "internalType": "uint256", "name": "_evPricePerKwh", "type": "uint256" }, { "internalType": "uint256", "name": "_peakMultiplier", "type": "uint256" }],
+    "name": "updatePricing",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "addressToNanogridId",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "evPricePerKwh",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "gridPricePerKwh",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "intervalRecords",
+    "outputs": [{ "internalType": "uint256", "name": "nanogridId", "type": "uint256" }, { "internalType": "uint256", "name": "solarOutput", "type": "uint256" }, { "internalType": "uint256", "name": "loadDemand", "type": "uint256" }, { "internalType": "uint256", "name": "batterySoC", "type": "uint256" }, { "internalType": "int256", "name": "powerBalance", "type": "int256" }, { "internalType": "uint256", "name": "gridExport", "type": "uint256" }, { "internalType": "uint256", "name": "evSales", "type": "uint256" }, { "internalType": "uint256", "name": "timestamp", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "nanogridAddresses",
+    "outputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "nanogridCount",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "nanogrids",
+    "outputs": [{ "internalType": "address", "name": "owner", "type": "address" }, { "internalType": "uint256", "name": "nanogridId", "type": "uint256" }, { "internalType": "uint256", "name": "totalGeneration", "type": "uint256" }, { "internalType": "uint256", "name": "totalConsumption", "type": "uint256" }, { "internalType": "uint256", "name": "batteryCapacity", "type": "uint256" }, { "internalType": "uint256", "name": "batterySoC", "type": "uint256" }, { "internalType": "uint256", "name": "gridExportRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "evSalesRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "lastUpdated", "type": "uint256" }, { "internalType": "bool", "name": "isActive", "type": "bool" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [],
+    "name": "peakMultiplier",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "totalEVRevenue",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "totalGridRevenue",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "address", "name": "", "type": "address" }],
+    "name": "totalP2PRevenue",
+    "outputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
+    "inputs": [{ "internalType": "uint256", "name": "", "type": "uint256" }],
+    "name": "transactionHistory",
+    "outputs": [{ "internalType": "address", "name": "sender", "type": "address" }, { "internalType": "address", "name": "receiver", "type": "address" }, { "internalType": "uint256", "name": "amountInKwh", "type": "uint256" }, { "internalType": "uint256", "name": "pricePerKwh", "type": "uint256" }, { "internalType": "uint256", "name": "totalRevenue", "type": "uint256" }, { "internalType": "uint256", "name": "timestamp", "type": "uint256" }],
+    "stateMutability": "view",
+    "type": "function"
+  }
+]
