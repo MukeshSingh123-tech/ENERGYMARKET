@@ -1,24 +1,74 @@
-# Project: EnergyMarket / SmartGrid (Monorepo)
+<p align="center">
+  <img src="assets/logo.svg" alt="EnergyMarket Logo" width="180"/>
+</p>
 
-**High-level:**  
-This repository contains:
+<h1 align="center">EnergyMarket: Decentralized Smart Grid System</h1>
 
-- A **frontend** (Vite + React + TypeScript + shadcn UI)  
-- A **backend** (FastAPI — Python)  
-- A **blockchain module** (Solidity contracts + generated build artifacts)
+<p align="center">
+  <img src="https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB?style=flat-square&logo=react" alt="React" />
+  <img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square&logo=fastapi" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/Blockchain-Solidity-363636?style=flat-square&logo=solidity" alt="Solidity" />
+  <img src="https://img.shields.io/badge/AI-TensorFlow%20%2F%20PyTorch-FF6F00?style=flat-square&logo=tensorflow" alt="AI" />
+</p>
 
-This README provides installation, development workflow, project hygiene, CI, and security guidance.
+<p align="center">
+  <strong>A Next-Generation Peer-to-Peer Energy Trading Platform combining AI, IoT, and Blockchain.</strong>
+</p>
 
 ---
 
-## 📁 Repository Structure (auto-detected)
-```
+## 📖 Project Overview & Problem Statement
+
+### The Problem
+Traditional power grids are centralized, relying on a one-way flow of electricity and information. This model struggles with:
+1.  **Inefficiency:** High transmission losses and lack of real-time load balancing.
+2.  **Renewable Integration:** Difficulty managing intermittent energy sources (Solar/Wind) from individual "prosumers."
+3.  **Trust & Transparency:** Lack of transparent pricing and automated settlement for small-scale energy trading.
+
+### The Solution: EnergyMarket
+**EnergyMarket** is a Smart Grid solution that enables a decentralized energy market. It allows prosumers to sell excess energy directly to consumers securely and automatically.
+- **AI-Driven:** Uses Machine Learning to forecast load demand and optimize grid stability.
+- **Blockchain-Secured:** Smart contracts ensure immutable, trustless transactions without a middleman.
+- **Real-Time Analysis:** Uses `pandapower` for backend load flow analysis to ensure grid physics are respected.
+
+---
+
+## 🏗 Technical Architecture
+
+This project is a monorepo divided into three distinct layers, each serving a critical function:
+
+### 1. 🎨 Frontend Layer (The Dashboard)
+**Stack:** Vite, React, TypeScript, shadcn/ui, Tailwind CSS.
+
+The user interface serves as the control center for Prosumers and Consumers.
+- **Features:** Real-time visualization of energy usage, wallet integration for crypto payments, and market bidding interfaces.
+- **Why this stack?** Vite ensures lightning-fast HMR (Hot Module Replacement), while TypeScript ensures type safety across the complex trading logic.
+
+### 2. 🧠 Backend Layer (The Brain)
+**Stack:** FastAPI (Python), Pandapower, TensorFlow/PyTorch, ONNX.
+
+The backend acts as the bridge between the physical grid simulation and the user.
+- **Grid Simulation:** Uses **Pandapower** to calculate load flow and short-circuit analysis to prevent grid overloads during trades.
+- **AI/ML:** utilizes **TensorFlow/PyTorch** models to predict energy generation (e.g., solar output based on weather) and dynamic pricing.
+- **API:** Fast, asynchronous endpoints manage user data and off-chain logic.
+
+### 3. ⛓️ Blockchain Layer (The Trust Anchor)
+**Stack:** Solidity, Truffle, Web3.js.
+
+The settlement layer that handles the financial and contractual logic.
+- **Smart Contracts:** Automatically execute trades when a bid matches an ask price.
+- **Immutability:** Records every energy transaction permanently, preventing fraud.
+- **Tokenization:** Represents energy credits as tokens for easy trading.
+
+---
+
+## 📂 Repository Structure
+```bash
 ENERGYMARKET/
 └─ smartgrid/
-     ├─ frontend/          # Vite + React + TypeScript app
-     ├─ backend/           # FastAPI backend
-     └─ blockchain/        # Solidity contracts & build artifacts
-```
+     ├─ frontend/          # Vite + React + TypeScript application
+     ├─ backend/           # FastAPI app + AI Models + Power Analysis
+     └─ blockchain/        # Solidity contracts & Truffle config
 
 > Your actual folder names may vary slightly — adjust commands accordingly.
 
@@ -59,25 +109,11 @@ If using Hardhat:
 ```bash
 cd ENERGYMARKET/smartgrid/blockchain
 npm ci
-npx hardhat compile
-npx hardhat test
+truffle compile
+truffle migrate reset --network
+truffle test
+truffle develop
 ```
-
----
-
-## 🧹 Repo Hygiene (Before pushing to GitHub)
-
-You **should NOT commit**:
-- `node_modules/`
-- `__pycache__/`
-- `*.pyc`
-- Solidity build artifacts (`build/contracts/*.json`)
-- lockfiles you don’t intend to maintain (`package-lock.json`, `yarn.lock`)
-- `.env` files
-
-This repo now includes:
-- `.gitignore` — cleans all of the above
-- Cleanup script (`scripts/list_and_remove_build_artifacts.sh`) to list/remove unwanted build files
 
 ---
 
@@ -152,4 +188,3 @@ pip-audit
 
 ---
 
-# 🎉 You're ready to push this project to GitHub!
