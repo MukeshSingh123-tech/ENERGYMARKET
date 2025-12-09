@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="EnergyMarket Logo" width="180"/>
+  <img src="assets/SMARTGRID.jpeg" alt="EnergyMarket Logo" width="180"/>
 </p>
 
 <h1 align="center">EnergyMarket: Decentralized Smart Grid System</h1>
