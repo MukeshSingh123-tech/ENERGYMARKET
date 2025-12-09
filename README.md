@@ -7,12 +7,13 @@
 <p align="center">
   <img src="https://img.shields.io/badge/Frontend-React%20%2B%20Vite-61DAFB?style=flat-square&logo=react" alt="React" />
   <img src="https://img.shields.io/badge/Backend-FastAPI-009688?style=flat-square&logo=fastapi" alt="FastAPI" />
+  <img src="https://img.shields.io/badge/Database-Supabase-3ECF8E?style=flat-square&logo=supabase" alt="Supabase" />
   <img src="https://img.shields.io/badge/Blockchain-Solidity-363636?style=flat-square&logo=solidity" alt="Solidity" />
   <img src="https://img.shields.io/badge/AI-TensorFlow%20%2F%20PyTorch-FF6F00?style=flat-square&logo=tensorflow" alt="AI" />
 </p>
 
 <p align="center">
-  <strong>A Next-Generation Peer-to-Peer Energy Trading Platform combining AI, IoT, and Blockchain.</strong>
+  <strong>A Next-Generation Peer-to-Peer Energy Trading Platform combining AI, Cloud Computing, and Blockchain.</strong>
 </p>
 
 ---
@@ -20,45 +21,51 @@
 ## 📖 Project Overview & Problem Statement
 
 ### The Problem
-Traditional power grids are centralized, relying on a one-way flow of electricity and information. This model struggles with:
+Traditional power grids are centralized and inefficient. They struggle with:
 1.  **Inefficiency:** High transmission losses and lack of real-time load balancing.
 2.  **Renewable Integration:** Difficulty managing intermittent energy sources (Solar/Wind) from individual "prosumers."
-3.  **Trust & Transparency:** Lack of transparent pricing and automated settlement for small-scale energy trading.
+3.  **Data Silos:** Lack of real-time, transparent data access for grid participants.
 
 ### The Solution: EnergyMarket
-**EnergyMarket** is a Smart Grid solution that enables a decentralized energy market. It allows prosumers to sell excess energy directly to consumers securely and automatically.
+**EnergyMarket** is a cloud-native Smart Grid solution that enables a decentralized energy market.
+- **Hybrid Architecture:** Combines the speed of **Cloud (Supabase)** for user data with the security of **Blockchain** for settlements.
 - **AI-Driven:** Uses Machine Learning to forecast load demand and optimize grid stability.
-- **Blockchain-Secured:** Smart contracts ensure immutable, trustless transactions without a middleman.
-- **Real-Time Analysis:** Uses `pandapower` for backend load flow analysis to ensure grid physics are respected.
+- **Real-Time:** Leverages Supabase Realtime to push live energy prices and grid status to the frontend.
 
 ---
 
 ## 🏗 Technical Architecture
 
-This project is a monorepo divided into three distinct layers, each serving a critical function:
+This project is a monorepo divided into layers, integrating Cloud and Blockchain technologies:
 
-### 1. 🎨 Frontend Layer (The Dashboard)
-**Stack:** Vite, React, TypeScript, shadcn/ui, Tailwind CSS.
+### 1. ☁️ Cloud & Database Layer (Supabase)
+**Stack:** Supabase (PostgreSQL, Auth, Realtime).
 
-The user interface serves as the control center for Prosumers and Consumers.
-- **Features:** Real-time visualization of energy usage, wallet integration for crypto payments, and market bidding interfaces.
-- **Why this stack?** Vite ensures lightning-fast HMR (Hot Module Replacement), while TypeScript ensures type safety across the complex trading logic.
+Supabase serves as the persistent data layer and authentication provider.
+- **Authentication:** Secure user management (Prosumers, Consumers, Grid Operators).
+- **Realtime Database:** Stores user profiles, historical energy data, and off-chain market activity.
+- **Live Updates:** Pushes instant updates to the dashboard when energy prices change or bids are accepted.
 
-### 2. 🧠 Backend Layer (The Brain)
-**Stack:** FastAPI (Python), Pandapower, TensorFlow/PyTorch, ONNX.
+### 2. 🧠 Backend Logic Layer (FastAPI)
+**Stack:** FastAPI (Python), Pandapower, TensorFlow/PyTorch.
 
-The backend acts as the bridge between the physical grid simulation and the user.
-- **Grid Simulation:** Uses **Pandapower** to calculate load flow and short-circuit analysis to prevent grid overloads during trades.
-- **AI/ML:** utilizes **TensorFlow/PyTorch** models to predict energy generation (e.g., solar output based on weather) and dynamic pricing.
-- **API:** Fast, asynchronous endpoints manage user data and off-chain logic.
+The computation engine that runs complex simulations not suitable for the database.
+- **Grid Physics:** Uses **Pandapower** to run load flow analysis and ensure grid stability.
+- **AI Models:** Runs **TensorFlow/PyTorch** models to predict generation output and detect anomalies.
+- **Integration:** Fetches data from Supabase, processes it with AI, and writes results back or triggers Blockchain events.
 
-### 3. ⛓️ Blockchain Layer (The Trust Anchor)
-**Stack:** Solidity, Truffle, Web3.js.
+### 3. 🎨 Frontend Layer (The Dashboard)
+**Stack:** Vite, React, TypeScript, shadcn/ui.
 
-The settlement layer that handles the financial and contractual logic.
-- **Smart Contracts:** Automatically execute trades when a bid matches an ask price.
-- **Immutability:** Records every energy transaction permanently, preventing fraud.
-- **Tokenization:** Represents energy credits as tokens for easy trading.
+The control center for users.
+- **Hybrid Data Fetching:** Reads user data directly from **Supabase** for speed, and transaction data from the **Blockchain** for verification.
+- **Visualization:** Graphs energy usage and market trends.
+
+### 4. ⛓️ Blockchain Layer (The Trust Anchor)
+**Stack:** Solidity, Truffle/Hardhat.
+
+- **Smart Contracts:** Handles the actual "Energy Tokens" and financial settlement.
+- **Trustless:** Ensures that once a trade is executed, the payment is irreversible and transparent.
 
 ---
 
@@ -66,10 +73,9 @@ The settlement layer that handles the financial and contractual logic.
 ```bash
 ENERGYMARKET/
 └─ smartgrid/
-     ├─ frontend/          # Vite + React + TypeScript application
-     ├─ backend/           # FastAPI app + AI Models + Power Analysis
-     └─ blockchain/        # Solidity contracts & Truffle config
-
+     ├─ frontend/          # Vite + React (Connects to Supabase & FastAPI)
+     ├─ backend/           # FastAPI (AI & Power System Logic)
+     └─ blockchain/        # Solidity Contracts
 > Your actual folder names may vary slightly — adjust commands accordingly.
 
 ---
